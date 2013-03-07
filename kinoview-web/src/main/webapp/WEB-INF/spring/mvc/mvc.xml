@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd">
+    <context:annotation-config />
+    <context:component-scan base-package="ru.atott.kinoview.web.controller" />
+    <mvc:annotation-driven/>
+    <mvc:resources mapping="/favicon.ico" location="/resources/favicon.ico"/>
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+
+    <!-- freemarker config -->
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/pages/"/>
+        <property name="freemarkerSettings">
+            <props>
+                <prop key="default_encoding">UTF-8</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="cache" value="true"/>
+        <property name="prefix" value=""/>
+        <property name="suffix" value=".ftl"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+    </bean>
+
+    <!-- AOP -->
+    <!--<bean name="springContext" class="ru.atott.melody.aspect.SpringContext" />
+    <bean name="modelAndViewInjectAspect" class="ru.atott.melody.aspect.ModelAndViewInjectAspect" />
+    <bean name="ajaxRequestAspect" class="ru.atott.melody.aspect.AjaxRequestAspect"/>
+    <bean name="userContextAspect" class="ru.atott.melody.aspect.UserContextAspect"/>
+    <bean name="proxyCreator" class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="beanNames">
+            <list>
+                <value>*Controller</value>
+            </list>
+        </property>
+        <property name="interceptorNames">
+            <list>
+                <value>modelAndViewInjectAspect</value>
+                <value>ajaxRequestAspect</value>
+                <value>userContextAspect</value>
+            </list>
+        </property>
+    </bean>-->
+</beans>

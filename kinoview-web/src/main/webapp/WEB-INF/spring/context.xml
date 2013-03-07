@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+    <tx:annotation-driven/>
+    <!-- Configuration -->
+    <jee:jndi-lookup id="configHome"
+                     jndi-name="java:comp/env/KINOVIEW_CONFIGURATION_FOLDER"
+                     expected-type="java.lang.String" default-value="f:/kinoview/configHome" />
+
+    <bean id="propertyPlaceholderConfigurer" class="ru.atott.kinoview.web.utils.SpringPropertiesHolder">
+        <property name="locations" value="file:///#{configHome}/kinoview.properties"/>
+        <property name="ignoreResourceNotFound" value="true"/>
+        <property name="ignoreUnresolvablePlaceholders" value="true"/>
+        <property name="properties">
+            <props>
+                <prop key="kinovew.web.version">1.0</prop>
+                <prop key="kinovew.web.releaseDate">--/--/2013</prop>
+                <prop key="jdbc.driverClassName">com.mysql.jdbc.Driver</prop>
+                <prop key="jdbc.url">jdbc:mysql://localhost/kinoview?characterEncoding=UTF-8&amp;useOldAliasMetadataBehavior=true</prop>
+                <prop key="jdbc.username">kinoview</prop>
+                <prop key="jdbc.password">kinoview</prop>
+            </props>
+        </property>
+    </bean>
+
+    <import resource="db/data-source.xml" />
+    <import resource="mvc/mvc.xml" />
+</beans>
