@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="vertical"
+              android:layout_width="match_parent" android:layout_height="wrap_content"
+              android:id="@+id/linearLayout">
+    <fragment android:layout_width="fill_parent" android:layout_height="wrap_content"
+              android:name="ru.atott.kinoview.android.fragment.FilmInfoFragment" android:id="@+id/popularFilmInfo"/>
+    <Button android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:text="@string/ui_all_films" android:id="@+id/all_films_button"/>
+    <Button android:layout_width="fill_parent" android:layout_height="wrap_content"
+            android:text="@string/ui_schedule" android:id="@+id/schedule_button"
+            android:focusableInTouchMode="false"/>
+</LinearLayout>
