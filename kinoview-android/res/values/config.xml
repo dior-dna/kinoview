@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="kinoview.service.getCinemasUrl">http://81.177.160.203:8000/service/getCinemas</string>
+</resources>

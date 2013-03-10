@@ -8,5 +8,6 @@
 	<version>1.0</version>
 	<modules>
 		<module>kinoview-web</module>
+		<module>kinoview-db</module>
 	</modules>
 </project>

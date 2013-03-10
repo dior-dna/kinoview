@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">kinoview-android</string><string name="ui_all_films">Все фильмы</string><string name="ui_schedule">Расписание</string>
+    <string name="app_name">kinoview-android</string>
+    <string name="ui_all_films">Все фильмы</string>
+    <string name="ui_schedule">Расписание</string>
+    <string name="ui_cinemas_load">Загрузка...</string>
 </resources>

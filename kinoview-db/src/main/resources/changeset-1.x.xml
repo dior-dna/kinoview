@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.7" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.7 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.7.xsd">
+    <changeSet id="1" author="Anton Zvonov">
+        <createTable tableName="cinemaVendor">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255) character set UTF8">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addAutoIncrement tableName="cinemaVendor" columnName="id" columnDataType="int" />
+    </changeSet>
+    <changeSet id="2" author="Anton Zvonov">
+        <createTable tableName="cinema">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="cinemaVendorId" type="int">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+            <column name="address" type="varchar(255) character set UTF8">
+                <constraints nullable="false" />
+            </column>
+            <column name="description" type="varchar(255) character set UTF8">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addAutoIncrement tableName="cinema" columnName="id" columnDataType="int" />
+        <addForeignKeyConstraint constraintName="fk_cinema_cinemaVendor"
+                                 baseTableName="cinema" baseColumnNames="cinemaVendorId"
+                                 referencedTableName="cinemaVendor" referencedColumnNames="id" />
+    </changeSet>
+</databaseChangeLog>
