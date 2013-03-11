@@ -97,6 +97,8 @@ public class CinemaProvider extends ContentProvider {
                 return Cinema.CONTENT_TYPE;
             case CINEMA_ITEM_TYPE:
                 return Cinema.CONTENT_ITEM_TYPE;
+            case VENDOR_LIST_TYPE:
+                return Vendor.CONTENT_TYPE;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
         }

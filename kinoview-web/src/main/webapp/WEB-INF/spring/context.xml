@@ -18,7 +18,7 @@
                 <prop key="kinovew.web.version">1.0</prop>
                 <prop key="kinovew.web.releaseDate">--/--/2013</prop>
                 <prop key="jdbc.driverClassName">com.mysql.jdbc.Driver</prop>
-                <prop key="jdbc.url">jdbc:mysql://localhost/kinoview?characterEncoding=UTF-8&amp;useOldAliasMetadataBehavior=true</prop>
+                <prop key="jdbc.url">jdbc:mysql://localhost/kinoview?characterEncoding=UTF-8&amp;useOldAliasMetadataBehavior=true&amp;autoReconnect=true</prop>
                 <prop key="jdbc.username">kinoview</prop>
                 <prop key="jdbc.password">kinoview</prop>
             </props>
