@@ -28,4 +28,5 @@
     <import resource="db/data-source.xml" />
     <import resource="mvc/mvc.xml" />
     <import resource="service/service.xml" />
+    <import resource="service/schedule.xml" />
 </beans>

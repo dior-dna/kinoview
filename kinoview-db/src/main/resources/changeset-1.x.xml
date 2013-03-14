@@ -32,4 +32,68 @@
                                  baseTableName="cinema" baseColumnNames="cinemaVendorId"
                                  referencedTableName="cinemaVendor" referencedColumnNames="id" />
     </changeSet>
+    <changeSet id="3" author="Anton Zvonov">
+        <createTable tableName="film">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="title" type="varchar(255) character set UTF8">
+                <constraints nullable="false"/>
+            </column>
+            <column name="duration" type="int" />
+            <column name="director" type="varchar(255) character set UTF8">
+                <constraints nullable="true"/>
+            </column>
+            <column name="actors" type="varchar(2000) character set UTF8">
+                <constraints nullable="true"/>
+            </column>
+            <column name="genre" type="varchar(120) character set UTF8">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        <addAutoIncrement tableName="film" columnName="id" columnDataType="int" />
+    </changeSet>
+    <changeSet id="4" author="Anton Zvonov">
+        <createTable tableName="cinemaFilm">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cinemaId" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="filmId" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addAutoIncrement tableName="cinemaFilm" columnName="id" columnDataType="int" />
+        <addForeignKeyConstraint constraintName="fk_cinemaFilm_cinema"
+                                 baseTableName="cinemaFilm" baseColumnNames="cinemaId"
+                                 referencedTableName="cinema" referencedColumnNames="id" />
+        <addForeignKeyConstraint constraintName="fk_cinemaFilm_film"
+                                 baseTableName="cinemaFilm" baseColumnNames="filmId"
+                                 referencedTableName="film" referencedColumnNames="id" />
+    </changeSet>
+    <changeSet id="5" author="Anton Zvonov">
+        <createTable tableName="cinemaFilmView">
+            <column name="id" type="int">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="cinemaId" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="filmId" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addAutoIncrement tableName="cinemaFilmView" columnName="id" columnDataType="int" />
+        <addForeignKeyConstraint constraintName="fk_cinemaFilmView_cinema"
+                                 baseTableName="cinemaFilmView" baseColumnNames="cinemaId"
+                                 referencedTableName="cinema" referencedColumnNames="id" />
+        <addForeignKeyConstraint constraintName="fk_cinemaFilmView_film"
+                                 baseTableName="cinemaFilmView" baseColumnNames="filmId"
+                                 referencedTableName="film" referencedColumnNames="id" />
+    </changeSet>
 </databaseChangeLog>
