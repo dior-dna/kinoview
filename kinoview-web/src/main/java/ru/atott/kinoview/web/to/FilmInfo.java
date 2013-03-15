@@ -7,6 +7,15 @@ public class FilmInfo {
     private String actors;
     private String imageUrl;
     private String genre;
+    private Long eid;
+
+    public Long getEid() {
+        return eid;
+    }
+
+    public void setEid(Long eid) {
+        this.eid = eid;
+    }
 
     public String getGenre() {
         return genre;

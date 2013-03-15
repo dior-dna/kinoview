@@ -14,6 +14,7 @@ import ru.atott.kinoview.web.repository.CinemaRepository;
 import ru.atott.kinoview.web.repository.FilmRepository;
 import ru.atott.kinoview.web.to.FilmInfo;
 import ru.atott.kinoview.web.vendor.Vendor;
+import ru.atott.kinoview.web.vendor.kronverk.KronverkCinemaVendor;
 import ru.atott.kinoview.web.vendor.luxor.LuxorCinemaVendor;
 
 import java.util.Date;
@@ -33,11 +34,16 @@ public class AdminService {
 
     public void updateAllData(Date date) throws Exception {
         updateLuxorData(date);
+        updateKronverkData(date);
     }
 
     public void updateLuxorData(Date date) throws Exception {
         updateVendorData(cinemaRepository.findOne(3L), new LuxorCinemaVendor(LuxorCinemaVendor.LUXOR_RYAZAN_BARS_CINEMA_ID), date);
         updateVendorData(cinemaRepository.findOne(2L), new LuxorCinemaVendor(LuxorCinemaVendor.LUXOR_RYAZAN_CRUIZ_CINEMA_ID), date);
+    }
+
+    public void updateKronverkData(Date date) throws Exception {
+        updateVendorData(cinemaRepository.findOne(9L), new KronverkCinemaVendor(KronverkCinemaVendor.PLAZA_CINEMA_URL, KronverkCinemaVendor.RYAZAN_CITY_ID), date);
     }
 
     private void updateVendorData(Cinema cinema, Vendor vendor, Date date) throws Exception {

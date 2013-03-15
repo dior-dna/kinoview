@@ -50,6 +50,7 @@ public class CinemaService {
             filmInfo.setDirector(film.getDirector());
             filmInfo.setDuration(film.getDuration());
             filmInfo.setGenre(film.getGenre());
+            filmInfo.setEid(film.getId());
             infos.add(filmInfo);
         }
         return infos;

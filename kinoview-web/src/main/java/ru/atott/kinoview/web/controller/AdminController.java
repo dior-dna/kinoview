@@ -25,4 +25,12 @@ public class AdminController {
         adminService.updateLuxorData(Utils.truncateDate(dateFormat.parse(date)));
         return true;
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/admin/update_kronverk", method = {RequestMethod.GET, RequestMethod.POST})
+    public Object updateKronverk(@RequestParam String date) throws Exception {
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+        adminService.updateKronverkData(Utils.truncateDate(dateFormat.parse(date)));
+        return true;
+    }
 }
