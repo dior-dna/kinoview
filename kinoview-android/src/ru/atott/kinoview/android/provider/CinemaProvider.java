@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.provider.BaseColumns;
 import android.text.TextUtils;
-import ru.atott.kinoview.android.db.DatabaseHelper;
+import ru.atott.kinoview.android.db.DB;
 import ru.atott.kinoview.android.exception.AppException;
 
 public class CinemaProvider extends ContentProvider {
@@ -51,7 +51,7 @@ public class CinemaProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-        this.db = new DatabaseHelper(getContext()).getWritableDatabase();
+        this.db = new DB(getContext()).getWritableDatabase();
         if (this.db == null) {
             return false;
         }
@@ -68,7 +68,7 @@ public class CinemaProvider extends ContentProvider {
         int matched = URI_MATCHER.match(uri);
         if (matched == CINEMA_ITEM_TYPE || matched == CINEMA_LIST_TYPE) {
             SQLiteQueryBuilder builder = new SQLiteQueryBuilder();
-            builder.setTables(DatabaseHelper.CINEMA_TABLE);
+            builder.setTables(DB.Cinemas.TABLE_NAME);
             if (TextUtils.isEmpty(sortOrder)) {
                 sortOrder = Cinema.SORT_ORDER_DEFAULT;
             }
@@ -109,13 +109,13 @@ public class CinemaProvider extends ContentProvider {
         if (URI_MATCHER.match(uri) != CINEMA_LIST_TYPE) {
             throw new IllegalArgumentException("Unsupported URI for insertion: " + uri + "; matched: " + URI_MATCHER.match(uri));
         }
-        long id = db.insert(DatabaseHelper.CINEMA_TABLE, null, values);
+        long id = db.insert(DB.Cinemas.TABLE_NAME, null, values);
         if (id > 0) {
             Uri itemUri = ContentUris.withAppendedId(uri, id);
             getContext().getContentResolver().notifyChange(itemUri, null);
             return itemUri;
         }
-        throw new AppException("Problem while inserting into " + DatabaseHelper.CINEMA_TABLE + ", uri: " + uri);
+        throw new AppException("Problem while inserting into " + DB.Cinemas.TABLE_NAME + ", uri: " + uri);
     }
 
     @Override
@@ -123,7 +123,7 @@ public class CinemaProvider extends ContentProvider {
         int delCount = 0;
         switch (URI_MATCHER.match(uri)) {
             case CINEMA_LIST_TYPE:
-                delCount = db.delete(DatabaseHelper.CINEMA_TABLE, selection, selectionArgs);
+                delCount = db.delete(DB.Cinemas.TABLE_NAME, selection, selectionArgs);
                 break;
             case CINEMA_ITEM_TYPE:
                 String id = uri.getLastPathSegment();
@@ -131,7 +131,7 @@ public class CinemaProvider extends ContentProvider {
                 if (!TextUtils.isEmpty(selection)) {
                     where += " AND " + selection;
                 }
-                delCount = db.delete(DatabaseHelper.CINEMA_TABLE, where, selectionArgs);
+                delCount = db.delete(DB.Cinemas.TABLE_NAME, where, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);
@@ -147,7 +147,7 @@ public class CinemaProvider extends ContentProvider {
         int updateCount = 0;
         switch (URI_MATCHER.match(uri)) {
             case CINEMA_LIST_TYPE:
-                updateCount = db.update(DatabaseHelper.CINEMA_TABLE, values, selection, selectionArgs);
+                updateCount = db.update(DB.Cinemas.TABLE_NAME, values, selection, selectionArgs);
                 break;
             case CINEMA_ITEM_TYPE:
                 String id = uri.getLastPathSegment();
@@ -155,7 +155,7 @@ public class CinemaProvider extends ContentProvider {
                 if (!TextUtils.isEmpty(selection)) {
                     where += " AND " + selection;
                 }
-                updateCount = db.update(DatabaseHelper.CINEMA_TABLE, values, where, selectionArgs);
+                updateCount = db.update(DB.Cinemas.TABLE_NAME, values, where, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unsupported URI: " + uri);

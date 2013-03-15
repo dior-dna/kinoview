@@ -4,4 +4,7 @@
     <string name="ui_all_films">Все фильмы</string>
     <string name="ui_schedule">Расписание</string>
     <string name="ui_cinemas_load">Загрузка...</string>
+    <string name="ui_tabs_films">Фильмы</string>
+    <string name="ui_tabs_schedule">Сеансы</string>
+    <string name="ui_tabs_cinemas">Кинотеатры</string>
 </resources>

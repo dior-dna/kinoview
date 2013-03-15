@@ -1,9 +1,12 @@
-package ru.atott.kinoview.android.activity;
+package ru.atott.kinoview.android.fragment;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -12,33 +15,30 @@ import ru.atott.kinoview.android.provider.CinemaProvider;
 import ru.atott.kinoview.android.service.GetCinemasAsyncTask;
 import ru.atott.kinoview.android.service.GetJsonAsyncTask;
 
-public class WelcomeActivity extends Activity {
+public class CinemasFragment extends Fragment {
     private Cursor cinemasCursor;
     private ProgressDialog loadCinemasProgressDialog;
+    private View rootView;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.welcome_activity);
-
-        ListView cinemaList = (ListView) findViewById(R.id.cinema_list);
-        cinemaList.addHeaderView(getLayoutInflater().inflate(R.layout.welcome_activity_head_part, null), null, false);
-
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.cinemas_fragment, container, false);
         fillCinemaList(true);
+        return rootView;
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         if (cinemasCursor != null && !cinemasCursor.isClosed()) {
             cinemasCursor.close();
         }
     }
 
     private void fillCinemaList(boolean loadIfNoData) {
-        ListView cinemaList = (ListView) findViewById(R.id.cinema_list);
+        ListView cinemaList = (ListView) rootView.findViewById(R.id.cinema_list);
 
-        cinemasCursor = getContentResolver().query(CinemaProvider.Vendor.CONTENT_URI, null, null, null, null);
+        cinemasCursor = getActivity().getContentResolver().query(CinemaProvider.Vendor.CONTENT_URI, null, null, null, null);
         if (cinemasCursor.getCount() == 0) {
             cinemasCursor.close();
             if (loadIfNoData) {
@@ -46,7 +46,7 @@ public class WelcomeActivity extends Activity {
                 return;
             }
         }
-        CursorAdapter adapter = new SimpleCursorAdapter(getApplicationContext(), R.layout.cinema_list_item, cinemasCursor,
+        CursorAdapter adapter = new SimpleCursorAdapter(getActivity(), R.layout.cinema_list_item, cinemasCursor,
                 new String[] {CinemaProvider.Cinema.NAME}, new int[] {R.id.name}, 0);
         cinemaList.setAdapter(adapter);
     }
@@ -55,7 +55,7 @@ public class WelcomeActivity extends Activity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            loadCinemasProgressDialog = new ProgressDialog(WelcomeActivity.this);
+            loadCinemasProgressDialog = new ProgressDialog(getActivity());
             loadCinemasProgressDialog.setMessage(getResources().getString(R.string.ui_cinemas_load));
             loadCinemasProgressDialog.show();
         }
@@ -64,7 +64,7 @@ public class WelcomeActivity extends Activity {
         protected void onPostExecute(Object result) {
             super.onPostExecute(result);
             if (result != null) {
-                fillContentProvider(getContentResolver());
+                fillContentProvider(getActivity().getContentResolver());
             }
             loadCinemasProgressDialog.dismiss();
             fillCinemaList(false);
