@@ -27,8 +27,14 @@ public class DB extends SQLiteOpenHelper {
         String COLUMN_GENRE = "genre";
     }
 
+    public static interface FilmsUpdates {
+        String TABLE_NAME = "filmupdate";
+        String COLUMN_ID = "_id";
+        String COLUMN_DATE = "date";
+    }
+
     private static final String DATABASE_NAME = "kinoview.db";
-    private static final int DATABASE_VERSION = 13;
+    private static final int DATABASE_VERSION = 16;
 
     public DB(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -51,12 +57,16 @@ public class DB extends SQLiteOpenHelper {
                 "eid integer not null, " +
                 "actors text null, " +
                 "genre text null )");
+        db.execSQL("create table filmupdate ( " +
+                "_id integer primary key autoincrement, " +
+                "date integer null )");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS cinema");
         db.execSQL("DROP TABLE IF EXISTS film");
+        db.execSQL("DROP TABLE IF EXISTS filmupdate");
         onCreate(db);
     }
 }

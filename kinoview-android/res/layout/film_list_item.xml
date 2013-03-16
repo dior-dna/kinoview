@@ -4,13 +4,14 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
+
     <TextView
-            android:id="@+id/name"
+            android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
             android:text=""
-            android:textSize="18sp">
+            android:textSize="18sp" android:textAppearance="@android:style/TextAppearance.Holo.Large">
     </TextView>
 </LinearLayout>

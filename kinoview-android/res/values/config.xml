@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="kinoview.service.getCinemasUrl">http://81.177.160.203:8000/service/getCinemas</string>
+    <string name="kinoview.service.getFilmsUrl">http://81.177.160.203:8000/service/getFilms?date=%1$s</string>
 </resources>

@@ -13,5 +13,6 @@
             </intent-filter>
         </activity>
         <provider android:name=".provider.CinemaProvider" android:authorities="ru.atott.kinoview.android.provider.CinemaProvider" />
+        <provider android:name=".provider.FilmProvider" android:authorities="ru.atott.kinoview.android.provider.FilmProvider" />
     </application>
 </manifest>

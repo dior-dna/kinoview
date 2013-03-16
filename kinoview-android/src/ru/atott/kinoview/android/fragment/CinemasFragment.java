@@ -29,10 +29,10 @@ public class CinemasFragment extends Fragment {
 
     @Override
     public void onDestroyView() {
-        super.onDestroyView();
         if (cinemasCursor != null && !cinemasCursor.isClosed()) {
             cinemasCursor.close();
         }
+        super.onDestroyView();
     }
 
     private void fillCinemaList(boolean loadIfNoData) {
