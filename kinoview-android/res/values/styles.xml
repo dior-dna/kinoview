@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ImageCard">
+        <item name="android:padding">5dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:background">@drawable/image_card_background</item>
+    </style>
+    <style name="Background">
+        <item name="android:background">@drawable/background</item>
+    </style>
+    <style name="Title" parent="@android:style/TextAppearance.Holo.Large">
+        <item name="android:textSize">22sp</item>
+    </style>
+</resources>

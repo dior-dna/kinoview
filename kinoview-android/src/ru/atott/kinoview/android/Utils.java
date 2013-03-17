@@ -20,4 +20,13 @@ public class Utils {
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
         return dateFormat.format(date);
     }
+
+    static public String getDurationString(Long minutes) {
+        if (minutes == null) {
+            return "";
+        }
+        String h = minutes / 60 + " ч.";
+        String m = minutes % 60 + " мин.";
+        return h + " " + m;
+    }
 }

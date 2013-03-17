@@ -1,6 +1,7 @@
 package ru.atott.kinoview.android.fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,10 +12,14 @@ import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import ru.atott.kinoview.android.R;
 import ru.atott.kinoview.android.Utils;
 import ru.atott.kinoview.android.provider.FilmProvider;
 import ru.atott.kinoview.android.service.GetFilmsAsyncTask;
+import ru.atott.kinoview.android.view.ResisableImageView;
 
 import java.util.Date;
 
@@ -22,10 +27,20 @@ public class FilmsFragment extends Fragment {
     private Cursor filmsCursor;
     private ProgressDialog loadFilmsProgressDialog;
     private View rootView;
+    private DisplayImageOptions displayImageOptions;
+    private ImageLoader imageLoader = ImageLoader.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.films_fragment, container, false);
+
+        displayImageOptions = new DisplayImageOptions.Builder()
+                .showStubImage(R.drawable.film_none)
+                .resetViewBeforeLoading()
+                .cacheInMemory()
+                .cacheOnDisc()
+                .build();
+
         fillFilmsList(true);
         return rootView;
     }
@@ -50,9 +65,7 @@ public class FilmsFragment extends Fragment {
                 return;
             }
         }
-        CursorAdapter adapater = new SimpleCursorAdapter(getActivity(), R.layout.film_list_item, filmsCursor,
-                new String[] {FilmProvider.Film.TITLE}, new int[] {R.id.title}, 0);
-        filmList.setAdapter(adapater);
+        filmList.setAdapter(new FilmAdapter(getActivity(), filmsCursor));
     }
 
     private GetFilmsAsyncTask getFilmsAsyncTask = new GetFilmsAsyncTask() {
@@ -74,4 +87,45 @@ public class FilmsFragment extends Fragment {
             fillFilmsList(false);
         }
     };
+
+    private class FilmAdapter extends SimpleCursorAdapter {
+        private class ViewHolder {
+            public ResisableImageView imageView;
+            public TextView titleView;
+            public TextView genreView;
+            public TextView durationView;
+        }
+
+        public FilmAdapter(Context context, Cursor c) {
+            super(context, R.layout.film_list_item, c, new String[] {FilmProvider.Film.TITLE}, new int[] {R.id.title}, 0);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = convertView;
+            final ViewHolder holder;
+            if (convertView == null) {
+                view = getActivity().getLayoutInflater().inflate(R.layout.film_list_item, parent, false);
+                holder = new ViewHolder();
+                holder.imageView = (ResisableImageView) view.findViewById(R.id.image);
+                holder.titleView = (TextView) view.findViewById(R.id.title);
+                holder.genreView = (TextView) view.findViewById(R.id.genre);
+                holder.durationView = (TextView) view.findViewById(R.id.duration);
+                view.setTag(holder);
+            } else {
+                holder = (ViewHolder) view.getTag();
+            }
+            getCursor().moveToPosition(position);
+            String title = getCursor().getString(getCursor().getColumnIndex(FilmProvider.Film.TITLE));
+            Long eid = getCursor().getLong(getCursor().getColumnIndex(FilmProvider.Film.EXTERNAL_ID));
+            String imageUrl = getResources().getString(R.string.kinoview_service_getFilmImageUrl, eid);
+            String genre = getCursor().getString(getCursor().getColumnIndex(FilmProvider.Film.GENRE));
+            Long duration = getCursor().getLong(getCursor().getColumnIndex(FilmProvider.Film.DURATION));
+            holder.titleView.setText(title);
+            holder.genreView.setText(genre);
+            holder.durationView.setText(Utils.getDurationString(duration));
+            imageLoader.displayImage(imageUrl, holder.imageView, displayImageOptions);
+            return view;
+        }
+    }
 }
