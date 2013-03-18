@@ -96,4 +96,11 @@
                                  baseTableName="cinemaFilmView" baseColumnNames="filmId"
                                  referencedTableName="film" referencedColumnNames="id" />
     </changeSet>
+    <changeSet id="6" author="Anton Zvonov">
+        <addColumn tableName="film">
+            <column name="normalized_title" type="varchar(255) character set UTF8">
+                <constraints nullable="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

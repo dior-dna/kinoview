@@ -24,6 +24,17 @@ public class Film {
     @Column(name="genre")
     private String genre;
 
+    @Column(name="normalized_title")
+    private String normalizedTitle;
+
+    public String getNormalizedTitle() {
+        return normalizedTitle;
+    }
+
+    public void setNormalizedTitle(String normalizedTitle) {
+        this.normalizedTitle = normalizedTitle;
+    }
+
     public Long getId() {
         return id;
     }

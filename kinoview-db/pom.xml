@@ -30,9 +30,9 @@
                 <configuration>
                     <changeLogFile>src/main/resources/changeset-1.x.xml</changeLogFile>
                     <driver>com.mysql.jdbc.Driver</driver>
-                    <url>jdbc:mysql://mysql80.1gb.ru/gb_kinoview</url>
-                    <username>gb_kinoview</username>
-                    <password>e9790b2690</password>
+                    <url>jdbc:mysql://localhost/kinoview</url>
+                    <username>kinoview</username>
+                    <password>kinoview</password>
                 </configuration>
                 <executions>
                     <execution>

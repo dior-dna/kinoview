@@ -4,33 +4,8 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jee="http://www.springframework.org/schema/jee"
        xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:tx="http://www.springframework.org/schema/tx"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
-    <bean id="updateDataTask" class="ru.atott.kinoview.web.schedule.UpdateDataTask" />
-
-    <bean name="updateDataJob" class="org.springframework.scheduling.quartz.JobDetailBean">
-        <property name="jobClass" value="ru.atott.kinoview.web.schedule.UpdateDataJob" />
-        <property name="jobDataAsMap">
-            <map>
-                <entry key="updateDataTask" value-ref="updateDataTask" />
-            </map>
-        </property>
-    </bean>
-
-    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
-        <property name="jobDetail" ref="updateDataJob" />
-        <property name="cronExpression" value="0 0 0/4 * * ?" />
-    </bean>
-
-    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
-        <property name="jobDetails">
-            <list>
-                <ref bean="updateDataJob" />
-            </list>
-        </property>
-        <property name="triggers">
-            <list>
-                <ref bean="cronTrigger" />
-            </list>
-        </property>
-    </bean>
+       xmlns:task="http://www.springframework.org/schema/task"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+    <context:component-scan base-package="ru.atott.kinoview.web.schedule" />
+    <task:annotation-driven />
 </beans>

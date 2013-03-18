@@ -11,8 +11,8 @@ import java.util.List;
 
 @Repository
 public interface FilmRepository extends CrudRepository<Film, Long> {
-    @Query("select f from Film f where lower(f.title) = ?1")
-    List<Film> queryFilmByTitle(String name);
+    @Query("select f from Film f where lower(f.normalizedTitle) = ?1")
+    List<Film> queryFilmByNormalizedTitle(String normalizedTitle);
 
     @Query("select distinct f from Film f, CinemaFilmView cfv where f.id = cfv.filmId and cfv.date = ?1")
     List<Film> queryFilmsByDate(Date date);
